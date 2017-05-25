@@ -1,0 +1,19 @@
+* {padding: 0; margin: 0}
+
+#chat_box {
+  position: absolute;
+  z-index: 100;
+  background-color: #ffffff;
+  border: 2px solid;
+  padding: 20px;
+  width: 300px;
+  max-width: 90vw;
+  max-height: 90vh;
+  resize: both;
+  overflow: auto;
+}
+
+#map {
+  position: absolute;
+  z-index: 1;
+}

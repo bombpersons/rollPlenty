@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="rp/style.css">
+    <title>Roll_Plenty</title>
+  </head>
+
+  <script src="pixi.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="rp/chat.js"></script>
+  <script src="rp/map.js"></script>
+
+  <body>
+    <!-- The map view with tokens and what not -->
+    <div id="map">
+    </div>
+
+    <!-- Chat box for rolling dice in the top left hand corner -->
+    <div id="chat_box">
+      <ul id="messages"></ul>
+      <form id="chat_box_form" action="">
+        <input id="m" autocomplete="off"/><button>Send</button>
+      </form>
+    </div>
+  </body>
+</html>
