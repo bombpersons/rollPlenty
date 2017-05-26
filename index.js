@@ -4,6 +4,9 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+// Port to use.
+app.set('port', (process.env.PORT || 5000));
+
 // Serve files from public as static files.
 app.use(express.static('public'));
 
@@ -30,6 +33,6 @@ io.on('connection', function(socket) {
 });
 
 // Begin listening and serving pages.
-http.listen(3000, function() {
-  console.log('listening on *:3000');
+http.listen(app.get('port'), function() {
+  console.log('listening on *:', app.get('port'));
 });
