@@ -4,6 +4,13 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+// This the db connection we use to sync with the client.
+var rp_db = require('./rp_db.js');
+
+// This handles the chat functionality, including the
+// dice roll macros.
+var rp_chat = require('./rp_chat.js');
+
 // Port to use.
 app.set('port', (process.env.PORT || 5000));
 
@@ -17,19 +24,8 @@ app.get('/', function(req, res) {
 
 // Deal with a new connection.
 io.on('connection', function(socket) {
-  console.log('a user connected');
-
-  // Set up callbacks.
-  socket.on('disconnect', function() {
-    console.log('a user disconnected');
-  })
-
-  // Emit chat messages to all connected users.
-  socket.on('chat message', function(msg) {
-    console.log('message: ' + msg);
-    io.emit('chat message', msg);
-  });
-
+  rp_db.initialize(io, socket);
+  rp_chat.initialize(io, socket);
 });
 
 // Begin listening and serving pages.
