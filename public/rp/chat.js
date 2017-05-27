@@ -1,13 +1,13 @@
 $(function () {
-  var socket = io();
+  var socket = io('/rp_chat');
 
   // Chat
   $('#chat_box_form').submit(function(){
-    socket.emit('chat message', $('#m').val());
+    socket.emit('message', $('#m').val());
     $('#m').val('');
     return false;
   });
-  socket.on('chat message', function(msg){
+  socket.on('message', function(msg){
     $('#messages').append($('<li>').text(msg));
   });
 });

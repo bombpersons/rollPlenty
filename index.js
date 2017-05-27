@@ -23,10 +23,8 @@ app.get('/', function(req, res) {
 });
 
 // Deal with a new connection.
-io.on('connection', function(socket) {
-  rp_db.initialize(io, socket);
-  rp_chat.initialize(io, socket);
-});
+rp_db.initialize(io);
+rp_chat.initialize(io);
 
 // Begin listening and serving pages.
 http.listen(app.get('port'), function() {

@@ -13,6 +13,21 @@
   overflow: auto;
 }
 
+#tree_box {
+  position: absolute;
+  z-index: 100;
+  background-color: #ffffff;  
+  width: 300px;
+  right: 5px;
+  top: 5px;
+  max-width: 90vw;
+  max-height: 90vh;
+  border: 2px solid;
+  padding: 20px;
+  resize: both;
+  overflow: auto;
+}
+
 #map {
   position: absolute;
   z-index: 1;
