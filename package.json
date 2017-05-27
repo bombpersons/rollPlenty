@@ -4,6 +4,7 @@
   "description": "Play rollplaying games over the internet!",
   "dependencies": {
     "express": "^4.15.2",
+    "lowdb": "^0.16.2",
     "socket.io": "^2.0.1"
   }
 }
