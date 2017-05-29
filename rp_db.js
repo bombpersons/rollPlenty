@@ -9,6 +9,8 @@ r.connect({ host: 'localhost', port: 28015 }, function(err, conn) {
 
 // Create a new entry in the campaign data.
 createNode = function(name, type, parent) {
+  if (parent == null) parent = "";
+
   return new Promise(function(resolve, reject) {
     r.db('campaign').table('data').insert([
       {
@@ -134,5 +136,13 @@ exports.initialize = function(io) {
     socket.on('getChildNodes', function(nodeId, callback) {
       getChildNodes(nodeId).then(callback);
     });
+
+    // Send the client any changes that occur to the campaign data.
+    r.db('campaign').table('data').pluck('id', 'name', 'type', 'parent').changes().run(connection).then(function(cursor) {
+      cursor.each(function(err, result) {
+        db_io.emit('nodeChanged', result);
+      });
+    });
+
   });
 };

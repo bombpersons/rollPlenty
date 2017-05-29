@@ -5,7 +5,7 @@ exports.initialize = function(io) {
     // Emit chat messages to all connected users.
     socket.on('message', function(msg) {
       console.log('message: ' + msg);
-      io.emit('message', msg);
+      chat_io.emit('message', msg);
     });
 
   });

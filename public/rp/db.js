@@ -24,15 +24,16 @@ $(function () {
   // Initialize fancy tree.
   $('#tree').fancytree({
     source: [
-      {title: "Root", lazy: true, nodeId: null},
+      {title: "Root", lazy: true, type: "directory", folder: true, key: ""},
     ],
 
+    // Only load the contents of a node when it's expanded.
     lazyLoad: function(event, data) {
       var node = data.node;
 
       // Get any children of this node from the server if we can.
       data.result = new Promise(function(resolve, reject) {
-        socket.emit('getChildNodes', node.data.nodeId, function(dump) {
+        socket.emit('getChildNodes', node.key, function(dump) {
           var results = [];
 
           // Process the data into the form fancytree wants.
@@ -41,8 +42,10 @@ $(function () {
             var item = dump[i];
             results.push({
               title: item.name,
-              nodeId: item.id,
-              lazy: true
+              key: item.id,
+              lazy: true,
+
+              type: item.type
             });
           }
 
@@ -53,20 +56,33 @@ $(function () {
 
     // Context menu.
     contextMenu: {
-      menu: {
-        new: { "name": "New", "icon": "new" },
-        delete: { "name": "Delete", "icon": "delete" },
+      menu: function(node) {
+        var items = {};
+
+        // Don't show the new file and folder for non-folders.
+        if (node.data.type === "directory") {
+          items.newFile = { "name": "New File", "icon": "new" };
+          items.newDir = { "name": "New Folder", "icon": "new" };
+        }
+
+        items.delete = { "name": "Delete", "icon": "delete" };
+        return items;
       },
       actions: {
-        new: function(node, options) {
+        newFile: function(node, options) {
           console.log(node);
-          socket.emit('createNode', 'custom_name', 'custom_type', node.data.nodeId, function(nodeId) {
-            // Force a reload of this node so that the new node is visible straight away.
-            node.load(true);
+          socket.emit('createNode', 'New File', 'custom_type', node.key, function(nodeId) {
+
+          });
+        },
+        newDir: function(node, options) {
+          socket.emit('createNode', 'New Folder', 'directory', node.key, function(nodeId) {
+
           });
         },
         delete: function(node, options) {
-          alert("DELETE");
+          socket.emit('deleteNode', node.key, function() {
+          });
         }
       }
     },
@@ -85,8 +101,7 @@ $(function () {
         var input = data.input.val();
 
         // Try and rename the node on the server.
-        socket.emit('renameNode', node.data.nodeId, input, function() {
-          console.log(input);
+        socket.emit('renameNode', node.key, input, function() {
           node.setTitle(input);
         });
       },
@@ -96,7 +111,11 @@ $(function () {
     extensions: ["dnd", "edit", "glyph", "wide", "contextMenu"],
     checkbox: true,
     dnd: {
+      autoExpandMS: 400,
       focusOnClick: true,
+      preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
+      preventRecursiveMoves: true, // Prevent dropping nodes on own descendants
+
       dragStart: function(node, data) { return true; },
       dragEnter: function(node, data) { return false; },
       dragDrop: function(node, data) { data.otherNode.copyTo(node, data.hitMode); }
@@ -111,6 +130,7 @@ $(function () {
       levelOfs: "1.5em"       // Adjust this if ul padding != "16px"
     }
   });
+  var tree = $('#tree').fancytree("getTree");
 
   $('#clear_db').click(function() {
     socket.emit('clearNodes', function() {
@@ -124,8 +144,65 @@ $(function () {
   });
 
   $('#update').click(function() {
-    var tree = $('#tree').fancytree("getTree");
     tree.reload();
+  });
+
+  // Listen to any changes to the tree.
+  socket.on('nodeChanged', function(result) {
+    // Check if the node was deleted.
+    if (result.new_val == null) {
+      // Okay the node was deleted, so find the node and delete it.
+      var node = tree.getNodeByKey(result.old_val.id);
+      if (node) {
+        node.remove();
+      }
+
+      // Simple =)
+      return;
+    }
+
+    // A node was change on the server. Find the node that represents it.
+    var nodeInfo = { lazy: true, title: result.new_val.name, key: result.new_val.id, type: result.new_val.type };
+    if (result.new_val.type === "directory") {
+      nodeInfo.folder = true;
+    }
+
+    var node = tree.getNodeByKey(result.new_val.id);
+    if (!node) {
+      // This is a new node. We should create it if we can find it's parent.
+      var nodeParent = tree.getNodeByKey(result.new_val.parent);
+      if (nodeParent && nodeParent.children != null) {
+        // If the nodes children array is null, that means it hasn't been expanded once yet,
+        // let the node discover it's children when it expands for the first time.
+        var node = nodeParent.addNode(nodeInfo);
+      }
+
+      return;
+    }
+
+    // Get the nodes parent id.
+    var nodeParent = node.getParent();
+    if (result.new_val.parent != nodeParent.key) {
+      // This nodes parent was changed!
+      // We should remove this node and re-add it.
+      node.remove();
+
+      // Add a new one...
+      nodeParent = tree.getNodeByKey(result.new_val.parent);
+      if (!nodeParent) {
+        // Quit this function, the new parent isn't visible in the tree.
+        // It probably hasn't been expanded yet. Wait until the user expands that
+        // part of the tree on their own.
+        return;
+      }
+
+      node = nodeParent.addNode(nodeInfo);
+      return;
+    }
+
+    // The node already existed, update it.
+    node.setTitle(result.new_val.name);
+    node.data.type = result.new_val.type;
   });
 
 });
