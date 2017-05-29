@@ -4,8 +4,9 @@
   "description": "Play rollplaying games over the internet!",
   "dependencies": {
     "express": "^4.15.2",
-    "lowdb": "^0.16.2",
     "rethinkdb": "^2.3.3",
+    "roll": "^1.2.0",
+    "slash-command": "0.0.52",
     "socket.io": "^2.0.1"
   }
 }

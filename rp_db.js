@@ -22,7 +22,7 @@ createNode = function(name, type, parent) {
       if (err) {
         reject(err);
       } else {
-        var uuid = result.generated_keys[0];
+        let uuid = result.generated_keys[0];
         console.log('Created node ' + name + ' in database with uuid ' + uuid);
 
         resolve(uuid);
@@ -41,7 +41,7 @@ deleteNode = function(nodeId) {
     // Delete all the children of this node.
     r.db('campaign').table('data').filter(r.row('parent').eq(nodeId)).run(connection).then(function(cursor) {
       // Create promises to delete all of the children.
-      var promises = [];
+      let promises = [];
       cursor.each(function(err, item) {
         promises.push(deleteNode(item.id));
       });
@@ -68,7 +68,7 @@ clearNodes = function() {
 getChildNodes = function(nodeId) {
   return new Promise(function(resolve, reject) {
     r.db('campaign').table('data').filter(r.row('parent').eq(nodeId)).run(connection).then(function(cursor) {
-      var children = [];
+      let children = [];
       cursor.each(function(err, item) {
         children.push(item);
       });
@@ -108,7 +108,7 @@ onDisconnect = function() {
 }
 
 exports.initialize = function(io) {
-  var db_io = io.of('/rp_db');
+  let db_io = io.of('/rp_db');
   db_io.on('connection', function(socket) {
     // We just connected to something.
     onConnect(db_io, socket);
