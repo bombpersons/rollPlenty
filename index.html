@@ -1,13 +1,27 @@
 <!doctype html>
 <html>
   <head>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.5.0/jquery.contextMenu.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.5.0/jquery.contextMenu.min.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/jquery.fancytree/2.22.4/skin-bootstrap-n/ui.fancytree.min.css">
+    <script src="https://cdn.jsdelivr.net/jquery.fancytree/2.22.4/jquery.fancytree-all.min.js"></script>
+
+    <script src="fancytree/jquery.fancytree.contextMenu.js"></script>
+
     <link rel="stylesheet" type="text/css" href="rp/style.css">
+
     <title>Roll_Plenty</title>
   </head>
 
   <script src="pixi.js"></script>
   <script src="/socket.io/socket.io.js"></script>
-  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script src="rp/chat.js"></script>
   <script src="rp/map.js"></script>
   <script src="rp/db.js"></script>
@@ -27,7 +41,11 @@
 
     <!-- Box for the tree view -->
     <div id="tree_box">
-      <p id="tree">Tree view stuff should be here!</p>
+      <div id="tree"></div>
+
+      <button id="clear_db">Clear DB</button>
+      <button id="add_test">Add Test</button>
+      <button id="update">Update</button>
     </div>
 
   </body>
