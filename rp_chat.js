@@ -14,15 +14,26 @@ commands.roll = function(io, body) {
 };
 commands.r = commands.roll;
 
+// Run a pre-parsed command
+runCommand = function(io, command, body) {
+  if(commands.hasOwnProperty(command)) {
+    commands[command](io, body);
+  } else {
+	io.emit('message', 'Invalid command');
+  }
+}
+
+// Parse an incoming message to detect commands and macros
 parseChat = function(io, msg) {
   let parsed = slashCommand(msg);
   if (parsed.command) {
-    commands[parsed.command](io, parsed.body);
+    runCommand(io, parsed.command, parsed.body);
   } else {
     io.emit('message', msg);
   }
 }
 
+// Initialise chat io and direct messages to the parseChat function
 exports.initialize = function(io) {
   let chat_io = io.of('/rp_chat');
   chat_io.on('connection', function(socket) {
@@ -31,7 +42,6 @@ exports.initialize = function(io) {
     socket.on('message', function(msg) {
       parseChat(chat_io, msg);
     });
-
   });
 
 
