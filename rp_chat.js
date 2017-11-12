@@ -1,18 +1,47 @@
 var slashCommand = require('slash-command');
 var Roll = require('roll'),
     roll = new Roll();
+var RollSW = require('./rollSW'),
+	rollSW = new RollSW();
 
-// A list of commands.
+// ---	
+// Setup commands.
+// ---
 var commands = {};
+
+// Standard d20 system rolls
 commands.roll = function(io, body) {
   // Get rid of any spaces in the body..
   // The dice roller doesn't like it.
   body = body.replace(/\s+/g, '');
 
-  let result = roll.roll(body);
-  io.emit('message', result.result);
+  // Wrap roll module call in error handling - 
+  // TODO: ideally we should pull this out into something more reusable
+  try {
+    let result = roll.roll(body);
+    io.emit('message', result.result);
+  } catch (e) {
+	  if(e instanceof Roll.InvalidInputError)
+	  {
+		  io.emit('message', "Invalid input: " + body);
+	  } else {
+		  throw e;
+	  }
+  }
 };
 commands.r = commands.roll;
+
+// SW:EotE system rolls
+commands.rollsw = function(io, body) {
+	let result = rollSW.roll(body);
+	io.emit('message', result.result);
+};
+commands.rsw = commands.rollsw;
+
+// ---
+// End of commands
+// ---
+
 
 // Run a pre-parsed command
 runCommand = function(io, command, body) {

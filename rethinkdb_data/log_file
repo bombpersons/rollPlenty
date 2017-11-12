@@ -1,0 +1,37 @@
+2017-11-12T16:21:09.940082800 0.008456s notice: In recursion: removing file 'C:\\Projects\\I\\rollPlenty\\rollPlenty\\rethinkdb_data\\tmp'
+2017-11-12T16:21:09.940082801 0.009067s warn: Trying to delete non-existent file 'C:\\Projects\\I\\rollPlenty\\rollPlenty\\rethinkdb_data\\tmp'
+2017-11-12T16:21:09.942084900 0.010991s notice: Initializing directory C:\\Projects\\I\\rollPlenty\\rollPlenty\\rethinkdb_data
+2017-11-12T16:21:09.943085200 0.012033s info: Creating a default database for your convenience. (This is because you ran 'rethinkdb' without 'create', 'serve', or '--join', and the directory 'C:\\Projects\\I\\rollPlenty\\rollPlenty\\rethinkdb_data' did not already exist or is empty.)
+2017-11-12T16:21:09.943085201 0.012086s notice: Running rethinkdb 2.3.6-windows (MSC 190024215)...
+2017-11-12T16:21:09.943085202 0.012287s notice: Running on 6.2.9200 (Windows 8, Server 2012)
+2017-11-12T16:21:09.944210500 0.012443s notice: Loading data from directory C:\\Projects\\I\\rollPlenty\\rollPlenty\\rethinkdb_data
+2017-11-12T16:21:10.364061500 0.432940s info: Automatically using cache size of 1289 MB
+2017-11-12T16:21:10.367065400 0.435666s notice: Listening for intracluster connections on port 29015
+2017-11-12T16:21:10.368066000 0.436935s notice: Listening for client driver connections on port 28015
+2017-11-12T16:21:10.368066001 0.437214s notice: Listening for administrative HTTP connections on port 8080
+2017-11-12T16:21:10.369065200 0.437624s notice: Listening on cluster addresses: 127.0.0.1, 192.168.1.212, fe80::4c2f:a8c7:c2e5:a026%4
+2017-11-12T16:21:10.369065201 0.438012s notice: Listening on driver addresses: 127.0.0.1, 192.168.1.212, fe80::4c2f:a8c7:c2e5:a026%4
+2017-11-12T16:21:10.369065202 0.438244s notice: Listening on http addresses: 127.0.0.1, 192.168.1.212, fe80::4c2f:a8c7:c2e5:a026%4
+2017-11-12T16:21:10.369065203 0.438248s notice: Server ready, "Cupcake_nff" 4f31c9c7-c9f8-47c7-ae0e-da00032b9662
+2017-11-12T16:22:20.156481200 0.013446s notice: Running rethinkdb 2.3.6-windows (MSC 190024215)...
+2017-11-12T16:22:20.156481201 0.013776s notice: Running on 6.2.9200 (Windows 8, Server 2012)
+2017-11-12T16:22:20.156481202 0.013868s notice: Loading data from directory C:\\Projects\\I\\rollPlenty\\rollPlenty\\rethinkdb_data
+2017-11-12T16:22:20.219523900 0.076408s info: Automatically using cache size of 1279 MB
+2017-11-12T16:22:20.222525500 0.080019s notice: Listening for intracluster connections on port 29015
+2017-11-12T16:22:20.224527900 0.081917s notice: Listening for client driver connections on port 28015
+2017-11-12T16:22:20.225527900 0.082263s notice: Listening for administrative HTTP connections on port 8080
+2017-11-12T16:22:20.225527901 0.082657s notice: Listening on cluster addresses: 127.0.0.1, 192.168.1.212, fe80::4c2f:a8c7:c2e5:a026%4
+2017-11-12T16:22:20.225527902 0.083054s notice: Listening on driver addresses: 127.0.0.1, 192.168.1.212, fe80::4c2f:a8c7:c2e5:a026%4
+2017-11-12T16:22:20.226528200 0.083369s notice: Listening on http addresses: 127.0.0.1, 192.168.1.212, fe80::4c2f:a8c7:c2e5:a026%4
+2017-11-12T16:22:20.226528201 0.083376s notice: Server ready, "Cupcake_nff" 4f31c9c7-c9f8-47c7-ae0e-da00032b9662
+2017-11-12T16:23:52.440096400 0.009629s notice: Running rethinkdb 2.3.6-windows (MSC 190024215)...
+2017-11-12T16:23:52.440096401 0.009856s notice: Running on 6.2.9200 (Windows 8, Server 2012)
+2017-11-12T16:23:52.440096402 0.009960s notice: Loading data from directory C:\\Projects\\I\\rollPlenty\\rollPlenty\\rethinkdb_data
+2017-11-12T16:23:52.566752200 0.136610s info: Automatically using cache size of 1285 MB
+2017-11-12T16:23:52.580760000 0.150510s notice: Listening for intracluster connections on port 29015
+2017-11-12T16:23:52.583761700 0.153792s notice: Listening for client driver connections on port 28015
+2017-11-12T16:23:52.584762300 0.154565s notice: Listening for administrative HTTP connections on port 8080
+2017-11-12T16:23:52.586764000 0.156936s notice: Listening on cluster addresses: 127.0.0.1, 192.168.1.212, fe80::4c2f:a8c7:c2e5:a026%4
+2017-11-12T16:23:52.588765700 0.158373s notice: Listening on driver addresses: 127.0.0.1, 192.168.1.212, fe80::4c2f:a8c7:c2e5:a026%4
+2017-11-12T16:23:52.588765701 0.159065s notice: Listening on http addresses: 127.0.0.1, 192.168.1.212, fe80::4c2f:a8c7:c2e5:a026%4
+2017-11-12T16:23:52.588765702 0.159072s notice: Server ready, "Cupcake_nff" 4f31c9c7-c9f8-47c7-ae0e-da00032b9662
