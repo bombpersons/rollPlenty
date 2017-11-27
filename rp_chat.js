@@ -4,9 +4,10 @@ var Roll = require('roll'),
 var RollSW = require('./rollSW'),
 	rollSW = new RollSW();
 
-// ---	
+// ---
 // Setup commands.
 // ---
+var PRINT_COMMANDS = true;
 var commands = {};
 
 // Standard d20 system rolls
@@ -15,7 +16,7 @@ commands.roll = function(io, body) {
   // The dice roller doesn't like it.
   body = body.replace(/\s+/g, '');
 
-  // Wrap roll module call in error handling - 
+  // Wrap roll module call in error handling -
   // TODO: ideally we should pull this out into something more reusable
   try {
     let result = roll.roll(body);
@@ -23,7 +24,7 @@ commands.roll = function(io, body) {
   } catch (e) {
 	  if(e instanceof Roll.InvalidInputError)
 	  {
-		  io.emit('message', "Invalid input: " + body);
+		  io.emit('message', e.message);
 	  } else {
 		  throw e;
 	  }
@@ -33,8 +34,20 @@ commands.r = commands.roll;
 
 // SW:EotE system rolls
 commands.rollsw = function(io, body) {
-	let result = rollSW.roll(body);
-	io.emit('message', result.result);
+
+  // Wrap RollSW module call in error handling -
+  // TODO: ideally we should pull this out into something more reusable
+  try {
+	   let result = rollSW.roll(body);
+	    io.emit('message', result.result);
+  } catch (e) {
+    if (e instanceof RollSW.InvalidInputError)
+    {
+      io.emit('message', e.message);
+    } else {
+      throw e;
+    }
+  }
 };
 commands.rsw = commands.rollsw;
 
@@ -56,6 +69,9 @@ runCommand = function(io, command, body) {
 parseChat = function(io, msg) {
   let parsed = slashCommand(msg);
   if (parsed.command) {
+    if (PRINT_COMMANDS) {
+      io.emit('message', msg);
+    }
     runCommand(io, parsed.command, parsed.body);
   } else {
     io.emit('message', msg);
